@@ -1,8 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const AddTask = () => {
-	const [task, setTask] = useState("");
+	const [task, setTask] = useState({ label: "", done: false });
 	const [taskList, setTaskList] = useState([]);
+	const [firstRender, setFirstRender] = useState(false);
+
+	useEffect(() => {
+		getTodoList();
+	}, []);
+
+	useEffect(() => {
+		if (firstRender) {
+			updateTodoList();
+		}
+	}, [taskList]);
+
+	const getTodoList = async () => {
+		const response = await fetch(
+			"https://assets.breatheco.de/apis/fake/todos/user/dans182",
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+
+		const data = await response.json();
+		setTaskList(data);
+		setFirstRender(true);
+	};
+
+	const updateTodoList = async () => {
+		await fetch(
+			"https://assets.breatheco.de/apis/fake/todos/user/dans182",
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(taskList),
+			}
+		);
+	};
 
 	let totalDeTareas = taskList.length;
 
@@ -13,7 +53,7 @@ const AddTask = () => {
 	};
 
 	const eliminarTarea = (id) => {
-		const listaTareaFiltrada = taskList.filter(
+		let listaTareaFiltrada = taskList.filter(
 			(elemento, index) => index !== id
 		);
 		setTaskList(listaTareaFiltrada);
@@ -25,9 +65,9 @@ const AddTask = () => {
 				<input
 					className="form-control"
 					placeholder="Write a task"
-					value={task}
+					value={task.label}
 					onChange={(e) => {
-						setTask(e.currentTarget.value);
+						setTask({ ...task, label: e.currentTarget.value });
 						console.log(e.currentTarget.value);
 					}}
 					onKeyPress={(e) => {
@@ -57,19 +97,20 @@ const AddTask = () => {
 			<div>
 				{/* MOSTRAR TAREA ANOTADA */}
 				<div>
-					{taskList.map((tareaAlmacenada, index) => {
+					{taskList.map((item, index) => {
 						return (
 							<div
 								key={index}
 								className="almacenDeTareas d-flex justify-content-between rounded"
 								style={{ width: "235px", height: "35px" }}>
-								<div className="tareaX">{tareaAlmacenada} </div>
+								<div className="tareaX">{item.label} </div>
 								<div className="tareaX">
 									<i
 										className="fas fa-times-circle mr-5"
 										type="button"
 										onClick={() => {
 											eliminarTarea(index);
+											updateTodoList();
 										}}></i>
 								</div>
 							</div>
