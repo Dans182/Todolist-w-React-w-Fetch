@@ -7,7 +7,7 @@ const AddTask = () => {
 	let totalDeTareas = taskList.length;
 
 	const nuevaTarea = () => {
-		if (task !== "") {
+		if (task.trim() !== "") {
 			setTaskList([...taskList, task]);
 		}
 	};
@@ -28,7 +28,7 @@ const AddTask = () => {
 						setTask(e.currentTarget.value);
 						console.log(e.currentTarget.value);
 					}}
-					onKeyPress={(e) => {
+					onKeyDowns={(e) => {
 						if (e.key === "Enter") {
 							e.preventDefault();
 							e.stopPropagation();
