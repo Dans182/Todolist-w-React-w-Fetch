@@ -76,6 +76,8 @@ const AddTask = () => {
 				<div className="text-center">
 					{totalDeTareas === 0
 						? "You have a lot of free time"
+						: totalDeTareas === 1
+						? taskList.length + " " + "task left"
 						: taskList.length + " " + "tasks left"}
 				</div>
 			</div>
