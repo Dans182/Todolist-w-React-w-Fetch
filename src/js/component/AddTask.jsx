@@ -13,7 +13,9 @@ const AddTask = () => {
 	};
 
 	const eliminarTarea = (id) => {
-		const listaTareaFiltrada = taskList.filter((e, index) => index !== id);
+		const listaTareaFiltrada = taskList.filter(
+			(elemento, index) => index !== id
+		);
 		setTaskList(listaTareaFiltrada);
 	};
 
@@ -28,7 +30,8 @@ const AddTask = () => {
 						setTask(e.currentTarget.value);
 						console.log(e.currentTarget.value);
 					}}
-					onKeyDowns={(e) => {
+					onKeyPress={(e) => {
+						//sustituit por keydown, pero sin que recargue pagina
 						if (e.key === "Enter") {
 							e.preventDefault();
 							e.stopPropagation();
