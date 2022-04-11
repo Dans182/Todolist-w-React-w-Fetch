@@ -47,8 +47,13 @@ const AddTask = () => {
 	let totalDeTareas = taskList.length;
 
 	const nuevaTarea = () => {
-		if (task.trim() !== "") {
+		const labels = taskList.map((task) => task.label);
+		const newTaskLabel = task.label.trim();
+		if (newTaskLabel != "" && !labels.includes(newTaskLabel)) {
 			setTaskList([...taskList, task]);
+			setTask({ label: "", done: false });
+		} else {
+			alert("No se puede ingresar esta tarea");
 		}
 	};
 
@@ -67,8 +72,8 @@ const AddTask = () => {
 					placeholder="Write a task"
 					value={task.label}
 					onChange={(e) => {
-						setTask({ ...task, label: e.currentTarget.value });
-						console.log(e.currentTarget.value);
+						setTask({ ...task, label: e.target.value });
+						console.log(e.target.value);
 					}}
 					onKeyPress={(e) => {
 						//sustituit por keydown, pero sin que recargue pagina
@@ -76,8 +81,7 @@ const AddTask = () => {
 							e.preventDefault();
 							e.stopPropagation();
 							// setTaskList([...taskList, task]);
-							nuevaTarea();
-							setTask("");
+							nuevaTarea(e);
 						}
 					}}
 				/>
@@ -86,10 +90,8 @@ const AddTask = () => {
 				<button
 					type="button"
 					className="btn btn-warning mt-3 mb-3"
-					onClick={() => {
-						// setTaskList([...taskList, task]);
-						nuevaTarea();
-						setTask("");
+					onClick={(e) => {
+						nuevaTarea(e);
 					}}>
 					Add a task
 				</button>
@@ -110,7 +112,7 @@ const AddTask = () => {
 										type="button"
 										onClick={() => {
 											eliminarTarea(index);
-											updateTodoList();
+											// updateTodoList(); //Esto funciona igualmente si lo quito.
 										}}></i>
 								</div>
 							</div>
@@ -121,8 +123,8 @@ const AddTask = () => {
 					{totalDeTareas === 0
 						? "You have a lot of free time"
 						: totalDeTareas === 1
-						? taskList.length + " " + "task left"
-						: taskList.length + " " + "tasks left"}
+						? totalDeTareas + " " + "task left"
+						: totalDeTareas + " " + "tasks left"}
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "./Header.jsx";
-import AddTask from "./AddTask.jsx";
+import Header from "./header.jsx";
+import AddTask from "./addTask.jsx";
 
 //create your first component
 
