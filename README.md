@@ -1,8 +1,10 @@
-El presente proyecto consistió en la elaboración de un Todo list realizado haciendo uso de React.
+El presente proyecto consistió en la elaboración de un Todo list realizado haciendo uso de React y APIs.
 
 De esta manera, debíamos efectuar el proyecto con bootstrap y armando todo en componentes de React.
 
 Las tareas consisitian en elaborar un campo que permitiera escribir tareas y reflejarlas, así como en la lista generada, al pasar el mouse sobre esta, pudieramos eliminar la tarea de nuestra preferencia.
+
+Cada tarea agregada se enviaría mediante a través de API con el uso de PUT de manera que al refrescar la página, estas tareas escritas no se perdieran, porque se recuperarían a través de API con un GET.
 
 
 # Hello World with React boilerplate
